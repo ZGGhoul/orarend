@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <span>
+            <input type="radio" name="duration" id="h45" value="h45" checked>
+            <label for="h45">45min</label>
+        </span>
+        <span>
+            <input type="radio" name="duration" id="h40" value="h40">
+            <label for="h40">40min</label>
+        </span>
+        <span>
+            <input type="radio" name="duration" id="h35" value="h35">
+            <label for="h35">35min</label>
+        </span>
+    </div>
+    <h1></h1>
+    <div class="info"></div>
+    <button onclick="refresh()">refresh</button>
+    <script src="data_radio.js"></script>
+    <script>
+        let bellShedule = []
+
+        function refresh() {
+            let selectedVal = document.querySelector('input[name="duration"]:checked').value
+            bellShedule = bellShedules[selectedVal]
+            console.log(bellShedule)
+        }
+        function getCurrentTime() {
+            let now = new Date()
+            let hour = now.getHours().toString().padStart(2, '0')
+            let min = now.getMinutes().toString().padStart(2, '0')
+            return hour + ":" + min
+
+        }
+        //első látogatás
+        let actualTime = getCurrentTime()
+        document.querySelector('h1').innerHTML = actualTime
+
+        function info() {
+            let current = bellShedule.find(obj => actualTime >= obj.from && actualTime <= obj.to)
+            let infoStr = ''
+            if (current) {
+                infoStr = `Most a/az ${current.id}.óra van és ${current.to}.-ig tart `;
+                infoStr = `Most szünet van,a következő óra ${next.from}-tól kezdődik`
+            } else {
+                infoStr = 'idk bro'
+            }
+
+            return infoStr
+        }
+        function refresh() {
+            actualTime = getCurrentTime()
+            document.querySelector('h1').innerHTML = actualTime
+            document.querySelector('.info').innerHTML = info()
+        }
+    </script>
+</body>
+
+</html>

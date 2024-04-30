@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1></h1>
+    <div class="info"></div>
+    <button onclick="refresh()">refresh</button>
+    <script src="data.js"></script>
+    <script>
+        console.log(bellShedule[0])
+
+        function getCurrentTime() {
+            let now = new Date()
+            let hour = now.getHours().toString().padStart(2, '0')
+            let min = now.getMinutes().toString().padStart(2, '0')
+            return hour + ":" + min
+
+        }
+        //első látogatás
+        let actualTime = getCurrentTime()
+        document.querySelector('h1').innerHTML = actualTime
+
+        function info() {
+            let current = bellShedule.find(obj => actualTime >= obj.from && actualTime <= obj.to)
+            let infoStr = ''
+            if (current) {
+                infoStr = `Most a/az ${current.id}.óra van és ${current.to}.-ig tart`
+                infoStr = `Most szünet van,a következő óra ${next.from}-tól kezdődik`
+            } else {
+                infoStr = 'idk bro'
+            }
+
+            return infoStr
+        }
+        function refresh() {
+            actualTime = getCurrentTime()
+            document.querySelector('h1').innerHTML = actualTime
+            document.querySelector('.info').innerHTML = info()
+        }
+    </script>
+</body>
+
+</html>
